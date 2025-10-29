@@ -288,7 +288,7 @@ function playScreen() {
         ball.x = backboard.x - ball.r;
       }
 
-      // --- Left Rim (rim) ---
+      // Check collision left rim
       if (
         ball.x + ball.r > rim.x &&
         ball.x - ball.r < rim.x + rim.w &&
