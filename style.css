@@ -1,0 +1,28 @@
+/* Responsive full window and centered canvas */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: #000000;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto; /* maintain aspect ratio */
+  background: transparent; /* makes canvas itself transparent */
+}
+
+#webix-ui {
+  display: none; /* default hidden */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  touch-action: auto; /* allow touch behaviors on inputs */
+}
