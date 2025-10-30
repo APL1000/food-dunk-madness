@@ -221,10 +221,10 @@ function handleDoorClick(door) {
   let randomResult = random(doorResults);
 
   if (randomResult === "Treat") {
-    score += 3;
+    score += 5;
     currentRewardImage = deliciousTreat;
   } else if (randomResult === "Disgusting Food") {
-    score -= 3;
+    score -= 2;
     currentRewardImage = disgustingFood;
   } else if (randomResult === "Boring Snack") {
     currentRewardImage = boringSnack;
@@ -761,7 +761,7 @@ function generateDailyLeaderboard() {
       sampleInitials[Math.floor(Math.random() * sampleInitials.length)];
     let location =
       sampleLocations[Math.floor(Math.random() * sampleLocations.length)];
-    let score = Math.floor(Math.random() * 54 + 5); // random score 100–1100
+    let score = Math.floor(Math.random() * 33 + 5); // random score 100–1100
 
     leaderboard.push({ initials, location, score });
   }
