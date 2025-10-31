@@ -882,8 +882,8 @@ function instructionScreen() {
         "• Aim for the hoop — timing and angle matter.\n" +
         "• After each round, pick a door for a surprise reward.\n" +
         "• Avoid boring snacks, aim for treats!\n" +
-        "• -3 for disgusting foods, 0 for boring snacks, \n" +
-        "and 3 points for treats.\n\n" +
+        "• -2 for disgusting foods, 0 for boring snacks, \n" +
+        "and 5 points for treats.\n\n" +
         "Press SPACE or ENTER to skip.",
       width / 2,
       height / 2 - 100
