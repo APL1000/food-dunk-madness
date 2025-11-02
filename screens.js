@@ -728,6 +728,10 @@ function generateDailyLeaderboard() {
     leaderboard = JSON.parse(localStorage.getItem("basketballleaderboard"));
     return;
   }
+  else{
+    localStorage.removeItem("basketballleaderboard");
+    localStorage.removeItem("basketballleaderboardDate");
+  }
 
   // Otherwise, make a new random leaderboard
   const sampleInitials = [
