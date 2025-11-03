@@ -497,6 +497,7 @@ function playScreen() {
           gameOver = false;
           saveButton.visible = false;
           saveButton.enabled = false;
+          generateDailyLeaderboard();
           updateLeaderboard(
             localStorage.getItem("basketballplayerInitials"),
             localStorage.getItem("basketballplayerLocation"),
