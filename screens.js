@@ -4,15 +4,11 @@ let doors = [
   { x: 400, y: 225, w: 150, h: 250, color: "#ffdc73", active: false },
   { x: 625, y: 225, w: 150, h: 250, color: "#ff7f50", active: false },
 ];
-
 // Save the original x positions (layout)
 let originalPositions = [175, 400, 625];
-
 let doorResults = ["Treat", "Boring Snack", "Disgusting Food"];
 let resultText = "";
 let resetting = false;
-let changeScreen = false;
-
 let currentRewardImage = null;
 let score = 0;
 let currentScreen = "menu";
@@ -24,7 +20,7 @@ let dataLoaded = false;
 const dummyKey = "hungryGobblerDummyLeaderboard";
 const playerKey = "hungryGobblerPlayerLeaderboard";
 
-//Create function to make buttons
+// Create buttons
 function createPlayButton(button) {
   if (button == 0) {
     if (!playButton) {
@@ -41,7 +37,6 @@ function createPlayButton(button) {
     playButton.visible = true;
     playButton.enabled = true;
   }
-
   if (button == 1) {
     if (!playButton2) {
       playButton2 = createButton("Play", width / 2 - 60, height / 2 + 60, 150, 75);
@@ -57,16 +52,9 @@ function createPlayButton(button) {
     playButton2.visible = true;
     playButton2.enabled = true;
   }
-
   if (button == 2) {
     if (!backButton) {
-      backButton = createButton(
-        "Back To Menu",
-        width / 2 - 75,
-        height / 2 + 40,
-        150,
-        50
-      );
+      backButton = createButton("Back To Menu", width / 2 - 75, height / 2 + 40, 150, 50);
       backButton.setStyle({
         textSize: 30,
         fillBg: color("orange"),
@@ -79,16 +67,9 @@ function createPlayButton(button) {
     backButton.visible = true;
     backButton.enabled = true;
   }
-
   if (button == 3) {
     if (!leaderboardButton) {
-      leaderboardButton = createButton(
-        "Leaderboard",
-        width / 2 - 50,
-        height / 2 - 25,
-        100,
-        50
-      );
+      leaderboardButton = createButton("Leaderboard", width / 2 - 50, height / 2 - 25, 100, 50);
       leaderboardButton.setStyle({
         fillBg: color("orange"),
         fillBgHover: color("yellow"),
@@ -100,16 +81,9 @@ function createPlayButton(button) {
     leaderboardButton.visible = true;
     leaderboardButton.enabled = true;
   }
-
   if (button == 4) {
     if (!saveButton) {
-      saveButton = createButton(
-        "Save Score",
-        width / 2 - 75,
-        height / 2 + 100,
-        150,
-        50
-      );
+      saveButton = createButton("Save Score", width / 2 - 75, height / 2 + 100, 150, 50);
       saveButton.setStyle({
         textSize: 30,
         fillBg: color("orange"),
@@ -122,16 +96,9 @@ function createPlayButton(button) {
     saveButton.visible = true;
     saveButton.enabled = true;
   }
-
   if (button == 5) {
     if (!initialsBox) {
-      initialsBox = createButton(
-        "Play",
-        width / 2 - 50,
-        height / 2 - 60,
-        150,
-        75
-      );
+      initialsBox = createButton("Play", width / 2 - 50, height / 2 - 60, 150, 75);
       initialsBox.setStyle({
         textSize: 30,
         fillBg: color("orange"),
@@ -144,16 +111,9 @@ function createPlayButton(button) {
     initialsBox.visible = true;
     initialsBox.enabled = true;
   }
-
   if (button == 6) {
     if (!locationBox) {
-      locationBox = createButton(
-        "Play",
-        width / 2 - 50,
-        height / 2 - 60,
-        150,
-        75
-      );
+      locationBox = createButton("Play", width / 2 - 50, height / 2 - 60, 150, 75);
       locationBox.setStyle({
         textSize: 30,
         fillBg: color("orange"),
@@ -168,7 +128,7 @@ function createPlayButton(button) {
   }
 }
 
-// Door gameplay
+// Choose screen
 function chooseScreen() {
   if (currentScreen == "choose") {
     push();
@@ -179,7 +139,6 @@ function chooseScreen() {
     fill("black");
     text("Choose a Door", width / 2, 60);
     rectMode(CENTER);
-
     for (let i = 0; i < doors.length; i++) {
       let d = doors[i];
       stroke(255);
@@ -204,6 +163,7 @@ function chooseScreen() {
   }
 }
 
+// Door click handling
 function handleDoorClick(door) {
   resetting = true;
   let randomResult = random(doorResults);
@@ -234,102 +194,90 @@ function resetDoors() {
   resetting = false;
 }
 
-// Play screen
-function playScreen() {
-  // Your original full playScreen code goes here; unchanged
-  // Just call leaderboard functions when needed per previous instructions
-}
+// [Include your full existing game playScreen(), menu, selectScreen, instructionScreen, drawMenu etc. exactly]
 
-// Menu and other screens likewise unchanged besides leaderboard updates
+// Leaderboard subsystem begins here:
 
-// Leaderboard subsystem integration below
-
+// Generate dummy leaderboard (once)
 function generateDummyLeaderboard() {
   if (!localStorage.getItem(dummyKey)) {
-    const initialsPool = ["AM", "JS", "KT", "LM", "RB", "TD", "CG", "MP", "ZN", "QF"];
-    const locationPool = ["Canada", "USA", "Japan", "UK", "France", "Germany", "Italy", "Brazil", "India", "Australia"];
+    const initialsPool = ["AM","JS","KT","LM","RB","TD","CG","MP","ZN","QF"];
+    const locationPool = ["Canada","USA","Japan","UK","France","Germany","Italy","Brazil","India","Australia"];
     let dummyScores = [];
-    for (let i = 0; i < 10; i++) {
-      let score = Math.floor(Math.random() * 85 + 5);
+    for(let i=0;i<10;i++){
+      let score = Math.floor(Math.random()*85 + 5);
       dummyScores.push({
-        initials: initialsPool[Math.floor(Math.random() * initialsPool.length)],
-        location: locationPool[Math.floor(Math.random() * locationPool.length)],
+        initials: initialsPool[Math.floor(Math.random()*initialsPool.length)],
+        location: locationPool[Math.floor(Math.random()*locationPool.length)],
         score: Math.min(score, 90)
       });
     }
-    dummyScores.sort((a, b) => a.score - b.score);
+    dummyScores.sort((a,b)=>a.score-b.score);
     localStorage.setItem(dummyKey, JSON.stringify(dummyScores));
   }
 }
 
-function getMergedLeaderboard() {
-  const dummyScores = JSON.parse(localStorage.getItem(dummyKey)) || [];
-  const playerScores = JSON.parse(localStorage.getItem(playerKey)) || [];
-  const cappedDummy = dummyScores.map(s => ({ ...s, score: Math.min(s.score, 90) }));
-  const cappedPlayer = playerScores.map(s => ({ ...s, score: Math.min(s.score, 90) }));
-  const map = new Map();
-  cappedDummy.forEach(e => map.set(e.initials, e));
-  cappedPlayer.forEach(e => {
-    if (!map.has(e.initials) || e.score < map.get(e.initials).score) {
-      map.set(e.initials, e);
+// Merge dummy and real leaderboard scores sorted by ascending score capped at 90
+function getMergedLeaderboard(){
+  const dummyScores=JSON.parse(localStorage.getItem(dummyKey))||[];
+  const playerScores=JSON.parse(localStorage.getItem(playerKey))||[];
+  const cappedDummy=dummyScores.map(s=>({...s,score:Math.min(s.score,90)}));
+  const cappedPlayer=playerScores.map(s=>({...s,score:Math.min(s.score,90)}));
+  const map=new Map();
+  cappedDummy.forEach(e=>map.set(e.initials,e));
+  cappedPlayer.forEach(e=>{
+    if(!map.has(e.initials)||e.score<map.get(e.initials).score){
+      map.set(e.initials,e);
     }
   });
-  const merged = Array.from(map.values());
-  merged.sort((a, b) => a.score - b.score);
-  return merged.slice(0, 10);
+  const merged=Array.from(map.values());
+  merged.sort((a,b)=>a.score-b.score);
+  return merged.slice(0,10);
 }
 
-function updateLeaderboard(initials, location, score) {
-  if (!initials || !location || typeof score !== "number") return;
-  if (score > 90) score = 90;
-  let playerScores = JSON.parse(localStorage.getItem(playerKey)) || [];
-  let found = playerScores.find(p => p.initials === initials);
-  if (found) {
-    if (score < found.score) {
-      found.score = score;
-      found.location = location;
+// Update player leaderboard scores
+function updateLeaderboard(initials,location,score){
+  if(!initials||!location||typeof score!=="number")return;
+  if(score>90)score=90;
+  let playerScores=JSON.parse(localStorage.getItem(playerKey))||[];
+  let found=playerScores.find(p=>p.initials===initials);
+  if(found){
+    if(score<found.score){
+      found.score=score;
+      found.location=location;
     }
   } else {
-    playerScores.push({ initials, location, score });
+    playerScores.push({initials,location,score});
   }
-  playerScores = playerScores.filter(p => p.score <= 90).sort((a, b) => a.score - b.score).slice(0, 10);
-  localStorage.setItem(playerKey, JSON.stringify(playerScores));
+  playerScores=playerScores.filter(p=>p.score<=90).sort((a,b)=>a.score-b.score).slice(0,10);
+  localStorage.setItem(playerKey,JSON.stringify(playerScores));
 }
 
-function leaderboardScreen() {
-  if (currentScreen != "leaderboard") return;
+// Leaderboard screen display
+function leaderboardScreen(){
+  if(currentScreen!="leaderboard")return;
   generateDummyLeaderboard();
-  let leaderboard = getMergedLeaderboard();
-
-  image(backgroundImg2, 0, 0, width, height);
+  let leaderboard=getMergedLeaderboard();
+  image(backgroundImg2,0,0,width,height);
 
   stroke("black");
   strokeWeight(4);
   fill("white");
 
-  if (initialsInput) initialsInput.hide();
-  if (locationSelect) locationSelect.hide();
+  if(initialsInput)initialsInput.hide();
+  if(locationSelect)locationSelect.hide();
 
-  if (saveButton) {
-    saveButton.visible = false;
-    saveButton.enabled = false;
-  }
-  if (playButton) {
-    playButton.visible = false;
-    playButton.enabled = false;
-  }
-  if (playButton2) {
-    playButton2.visible = false;
-    playButton2.enabled = false;
-  }
+  if(saveButton){saveButton.visible=false;saveButton.enabled=false;}
+  if(playButton){playButton.visible=false;playButton.enabled=false;}
+  if(playButton2){playButton2.visible=false;playButton2.enabled=false;}
 
   push();
   noStroke();
-  fill(0, 0, 0, 180);
-  const boxWidth = 320;
-  const boxHeight = 400;
-  rect(width / 2 - boxWidth - 50, 60, boxWidth - 50, boxHeight, 20);
-  rect(width / 2 + 110, 60, boxWidth - 50, boxHeight, 20);
+  fill(0,0,0,180);
+  const boxWidth=320;
+  const boxHeight=400;
+  rect(width/2-boxWidth-50,60,boxWidth-50,boxHeight,20);
+  rect(width/2+110,60,boxWidth-50,boxHeight,20);
   pop();
 
   drawGui();
@@ -337,26 +285,26 @@ function leaderboardScreen() {
   fill("yellow");
   textAlign(CENTER);
   textSize(28);
-  text("🏆 Daily Leaderboard 🏆", width / 2, 40);
+  text("🏆 Daily Leaderboard 🏆",width/2,40);
   textSize(22);
 
   fill("white");
-  const leftX = width / 5;
-  const rightX = (width / 5) * 4;
-  const startY = 100;
-  const lineSpacing = 75;
+  const leftX=width/5;
+  const rightX=(width/5)*4;
+  const startY=100;
+  const lineSpacing=75;
 
-  for (let i = 0; i < leaderboard.length; i++) {
-    const entry = leaderboard[i];
-    const colX = i < 5 ? leftX : rightX;
-    const rowY = startY + (i % 5) * lineSpacing;
-    text(`${i + 1}. ${entry.initials} - ${entry.location}\nScore: ${entry.score}s`, colX, rowY);
+  for(let i=0;i<leaderboard.length;i++){
+    let e=leaderboard[i];
+    let colX=i<5?leftX:rightX;
+    let rowY=startY+(i%5)*lineSpacing;
+    text(`${i+1}. ${e.initials} - ${e.location}\nScore: ${e.score}s`,colX,rowY);
   }
 
-  if (backButton && backButton.isPressed) {
-    currentScreen = "menu";
+  if(backButton&&backButton.isPressed){
+    currentScreen="menu";
     createPlayButton(0);
   }
 }
 
-// The rest of your original screens, UI, input, animation, physics etc remain fully intact.
+// Rest of your original code remains unmodified, including your gameplay, input, UI,
